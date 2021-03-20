@@ -1,0 +1,95 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(ggplot2)
+```
+
+```{r}
+# absolute values
+absoluteT=table(SeattleBuildingPermits_2021$PermitTypeDesc,
+                exclude = 'nothing') #include all!
+#here you are:
+absoluteT
+```
+```{r}
+prop.table(absoluteT)
+```
+
+
+```{r}
+names(absoluteT)[1]='Add/Alt'
+```
+```{r}
+names(absoluteT)[4]='Demo'
+```
+```{r}
+names(absoluteT)[5]='New'
+
+```
+```{r}
+names(absoluteT)[6]='Temp'
+
+```
+```{r}
+names(absoluteT)[8]='Unknown'
+```
+```{r}
+names(absoluteT)[2]='Use Change'
+```
+```{r}
+names(absoluteT)[3]='Curb Cut'
+
+```
+```{r}
+names(absoluteT)[7]='Tenant Imp.'
+
+```
+
+
+```{r}
+ToPlot=prop.table(absoluteT)*100
+#you get:
+ToPlot
+```
+
+
+```{r}
+# stacked bar chart
+p<-ggplot(SeattleBuildingPermits_2021, 
+       aes(x = PermitTypeDesc, 
+           fill = PermitClass)) + 
+  geom_bar(position = "stack")
+
+
+```
+
+```{r}
+
+
+p + theme(axis.ticks.x = element_blank())+
+  scale_x_discrete(
+    breaks=c("Addition/Alteration","Change of Use Only - No Construction","Curb Cut","Demolition","New","Temporary","Tenant Improvement","<N/A>"),
+    labels=c("Add/Alt", "Change", "Curb Cut","Demo","New","Temp","Tenant","N/A")) +
+  ggtitle("Seattle Building Permits") +
+  xlab("Permit Type") + ylab("Count") +
+  labs(fill = "Permit Class") +
+  theme(axis.text.x = element_text(angle=80, size=10, vjust = 0.5)) 
+
+
+  
+
+
+  
+  
+
+```
+
+```{r}
+p + theme (axis.text.x = element_text(angle=50, size=10, vjust = 0.5))
+par(mar = c(5, 5, 5, 5)) # Set the margin on all sides to 6
+```
+
+```
+

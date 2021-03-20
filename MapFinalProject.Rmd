@@ -1,0 +1,64 @@
+```{r}
+linkMap="https://github.com/Vstella8/Visual-Course/raw/main/SeattleMap.json"
+library(sf)
+```
+
+```{r}
+mapWorlf=read_sf(linkMap)
+```
+
+```{r}
+mapWorld=read_sf(linkMap)
+
+```
+```{r}
+head(mapWorld)
+```
+```{r}
+mapWorldVars=merge(mapWorld, #map first
+                   SeattleBuildingPermits_2021)
+```
+
+```{r}
+library(ggplot2)
+# plot original map
+base=ggplot(data=mapWorld) + geom_sf(fill='grey90',
+                                     color=NA) + theme_classic()
+
+base #base map
+```
+
+```{r}
+colMap= base + geom_sf(data=mapWorldVars,
+                       aes(fill=PermitClass),
+                       color=NA)
+
+colMap
+```
+
+```{r}
+library(rio)
+
+
+
+idxcity=import(linkMap)
+```
+```{r}
+str(linkMap)
+```
+
+
+
+```{r}
+head(linkMap)
+```
+
+
+```{r}
+idxcity_sf = st_as_sf(idxcity, 
+                      coords = c("1", "1"),
+                      crs = st_crs(SeattleBuildingPermits_2021))
+```
+
+
+```{r}
